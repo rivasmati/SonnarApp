@@ -165,3 +165,8 @@ document.addEventListener('visibilitychange', () => {
         playAudio();
     }
 });
+
+
+let Markers = []
+let Gif = []
+let Canciones = [Sal,Mayo,Hola,Tambor,Recreo]
