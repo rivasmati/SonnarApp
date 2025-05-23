@@ -8,6 +8,9 @@ const statusIndicator = document.getElementById('status-indicator');
 const statusText = document.getElementById('status-text');
 const hiroMarker = document.getElementById('hiro-marker');
 
+const hiroMarker2 = document.getElementById('hiro-marker2');
+const audioPlayer2 = document.getElementById('audio-player2');
+
 // Application state
 let isAudioPlaying = false;
 let markerVisible = false;
@@ -55,6 +58,7 @@ function setupMarkerEvents() {
   
     // Get reference to the marker image
     markerImage = document.getElementById("marker-image")
+    markerImage2 = document.getElementById("marker-image2")
   
     // Initially hide the image (optional)
     if (markerImage) {
@@ -92,6 +96,42 @@ function setupMarkerEvents() {
       // Pause audio when marker is lost
       pauseAudio()
     })
+
+
+
+
+    //PARTE 2 ELIMINAR
+    // When marker is found
+    hiroMarker2.addEventListener("markerFound", () => {
+      console.log("Marker found!")
+      markerVisible = true
+      updateStatus(true, "Marcador detectado")
+  
+      // Show the image
+      if (markerImage) {
+        markerImage.setAttribute("visible", "true")
+      }
+  
+      // Play audio if not already playing
+      if (!isAudioPlaying) {
+        playAudio2()
+      }
+    })
+  
+    // When marker is lost
+    hiroMarker2.addEventListener("markerLost", () => {
+      console.log("Marker lost!")
+      markerVisible = false
+      updateStatus(false, "Buscando marcador...")
+  
+      // Hide the image
+      if (markerImage) {
+        markerImage.setAttribute("visible", "false")
+      }
+  
+      // Pause audio when marker is lost
+      pauseAudio2()
+    })
 }
 
 // Play audio function
@@ -111,6 +151,29 @@ function playAudio() {
 // Pause audio function
 function pauseAudio() {
     audioPlayer.pause();
+    isAudioPlaying = false;
+    console.log('Audio paused');
+}
+
+
+//PARTE 2 BORRAR
+// Play audio function
+function playAudio2() {
+    audioPlayer2.play()
+        .then(() => {
+            isAudioPlaying = true;
+            console.log('Audio playing');
+        })
+        .catch(error => {
+            console.error('Error playing audio:', error);
+            // On mobile, autoplay might be blocked, so we need user interaction
+            showPlayButton();
+        });
+}
+
+// Pause audio function
+function pauseAudio2() {
+    audioPlayer2.pause();
     isAudioPlaying = false;
     console.log('Audio paused');
 }
@@ -165,8 +228,3 @@ document.addEventListener('visibilitychange', () => {
         playAudio();
     }
 });
-
-
-let Markers = []
-let Gif = []
-let Canciones = [Sal,Mayo,Hola,Tambor,Recreo]

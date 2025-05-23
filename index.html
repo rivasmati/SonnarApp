@@ -53,6 +53,19 @@
                         id="marker-image">
                     </a-image>
                 </a-marker>
+
+                <a-marker preset="hiro" id="hiro-marker2">
+                   <!-- Image that will appear on top of the marker -->
+                   <a-image
+                       src="./assets/images/Prueba2.png"
+                       position="0 0.1 0"
+                       rotation="-90 0 0"
+                       width="1"
+                       height="1"
+                       scale="1 1 1"
+                       id="marker-image2">
+                   </a-image>
+                </a-marker>
                 
                 <!-- Camera -->
                 <a-entity camera></a-entity>
@@ -62,6 +75,11 @@
         <!-- Audio player (hidden) -->
         <audio id="audio-player" preload="auto">
             <source src="./assets/audio/RUINAS-DE-SAL-VOZ-REC.mp3" type="audio/mpeg">
+            Tu navegador no soporta el elemento de audio.
+        </audio>
+
+        <audio id="audio-player2" preload="auto">
+            <source src="./assets/audio/Miranda!, TINI - Me Gusta (Official Video) - MirandaOficialVEVO.mp3" type="audio/mpeg">
             Tu navegador no soporta el elemento de audio.
         </audio>
 
