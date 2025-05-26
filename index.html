@@ -12,14 +12,24 @@
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     
-    <!-- Three.js (commented out as requested, for future use) -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> -->
-    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
-    <div class="container-fluid p-0 m-0">
+    <!-- Splash Screen con efecto de movimiento -->
+    <div id="splash-screen" class="d-flex justify-content-center align-items-center">
+        <div class="blur-rotation-container">
+            <img src="./assets/images/splash-logo.png" 
+                 alt="ETERO INSTANTE AUSTRALI" 
+                 class="rotating-logo blur-rotation">
+            <img src="./assets/images/splash-logo.png" 
+                 alt="ETERO INSTANTE AUSTRALI" 
+                 class="rotating-logo-back">
+        </div>
+    </div>
+
+    <!-- Contenido principal (oculto inicialmente) -->
+    <div class="container-fluid p-0 m-0 d-none" id="main-content">
         <!-- Loading Screen -->
         <div id="loading-screen" class="d-flex flex-column justify-content-center align-items-center">
             <div class="spinner-border text-primary mb-3" role="status">
@@ -30,12 +40,38 @@
         </div>
 
         <!-- Instructions -->
-        <div id="instructions" class="d-none text-center p-3">
-            <h2>Busca el marcador Hiro</h2>
-            <p>Apunta la cámara hacia el marcador para reproducir el audio</p>
-            <img src="./assets/markers/HIRO.jpg" alt="Marcador Hiro" class="img-fluid marker-preview mb-3">
-            <button id="start-button" class="btn btn-primary">Comenzar</button>
+<div id="instructions" class="d-none text-center p-3">
+    <h2>Selecciona un álbum</h2>
+    <p>Elige un marcador para reproducir su audio</p>
+    
+    <div class="album-container d-flex justify-content-center flex-wrap">
+        <!-- Álbum 1 -->
+        <div class="album-card mx-2">
+            <img src="./assets/markers/HIRO.jpg" alt="Álbum 1" class="img-fluid marker-preview mb-2">
+            <p class="album-title">Álbum 1</p>
         </div>
+        
+        <!-- Álbum 2 -->
+        <div class="album-card mx-2">
+            <img src="./assets/markers/Prueba.jpeg" alt="Álbum 2" class="img-fluid marker-preview mb-2">
+            <p class="album-title">Álbum 2</p>
+        </div>
+        
+        <!-- Álbum 3 -->
+        <div class="album-card mx-2">
+            <img src="./assets/markers/Prueba2.png" alt="Álbum 3" class="img-fluid marker-preview mb-2">
+            <p class="album-title">Álbum 3</p>
+        </div>
+        
+        <!-- Álbum 4 -->
+        <div class="album-card mx-2">
+            <img src="./assets/markers/album4.jpg" alt="Álbum 4" class="img-fluid marker-preview mb-2">
+            <p class="album-title">Álbum 4</p>
+        </div>
+    </div>
+    
+    <button id="start-button" class="btn btn-primary mt-3">Comenzar</button>
+</div>
 
         <!-- AR Scene (hidden initially) -->
         <div id="ar-container" class="d-none">

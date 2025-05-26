@@ -1,4 +1,5 @@
 // DOM Elements
+const albumCards = document.querySelectorAll('.album-card');
 const loadingScreen = document.getElementById('loading-screen');
 const instructions = document.getElementById('instructions');
 const startButton = document.getElementById('start-button');
@@ -7,34 +8,68 @@ const audioPlayer = document.getElementById('audio-player');
 const statusIndicator = document.getElementById('status-indicator');
 const statusText = document.getElementById('status-text');
 const hiroMarker = document.getElementById('hiro-marker');
-
 const hiroMarker2 = document.getElementById('hiro-marker2');
 const audioPlayer2 = document.getElementById('audio-player2');
+const splashScreen = document.getElementById('splash-screen');
+const mainContent = document.getElementById('main-content');
 
 // Application state
 let isAudioPlaying = false;
 let markerVisible = false;
 let arInitialized = false;
-
 let markerImage;
+let markerImage2;
 
-// Initialize the application
+// Initialize the application with splash screen
 document.addEventListener('DOMContentLoaded', () => {
-    // Check if browser supports getUserMedia (camera access)
+    // First show splash screen for 2 seconds
+    setTimeout(() => {
+        splashScreen.classList.add('splash-fade-out');
+        
+        // After fade out animation completes
+        setTimeout(() => {
+            splashScreen.style.display = 'none';
+            mainContent.classList.remove('d-none');
+            
+            // Now initialize the rest of the app
+            initializeApp();
+        }, 800); // Match this with CSS fadeOut duration
+    }, 2000); // Splash screen display time (2000ms = 2 segundos)
+});
+
+function initializeApp() {
+    // [NUEVO] Ocultar completamente el contenedor AR
+    arContainer.style.display = 'none';
+    arContainer.style.visibility = 'hidden';
+    albumCards.forEach(card => {
+    card.addEventListener('click', function() {
+        // Remover selección previa
+        albumCards.forEach(c => c.classList.remove('selected'));
+        
+        // Seleccionar este álbum
+        this.classList.add('selected');
+        
+        // Aquí puedes añadir lógica para cargar el marcador específico
+        const albumTitle = this.querySelector('.album-title').textContent;
+        console.log(`Álbum seleccionado: ${albumTitle}`);
+    });
+});
+    
+    // [EXISTENTE] Verificar soporte de cámara
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         showError('Tu navegador no soporta acceso a la cámara. Por favor, intenta con otro navegador.');
         return;
     }
 
-    // Show instructions after loading
+    // [EXISTENTE] Mostrar instrucciones después de carga
     setTimeout(() => {
         loadingScreen.classList.add('d-none');
         instructions.classList.remove('d-none');
     }, 1500);
 
-    // Start button click handler
+    // [EXISTENTE] Manejador del botón "Comenzar"
     startButton.addEventListener('click', initializeAR);
-});
+}
 
 // Initialize AR experience
 function initializeAR() {
@@ -43,7 +78,6 @@ function initializeAR() {
     statusIndicator.classList.remove('d-none');
     
     // Set up marker detection events once AR.js is initialized
-    // We need to wait for the scene to load
     const scene = document.querySelector('a-scene');
     
     if (scene.hasLoaded) {
@@ -54,128 +88,111 @@ function initializeAR() {
 }
 
 function setupMarkerEvents() {
-    arInitialized = true
+    arInitialized = true;
   
-    // Get reference to the marker image
-    markerImage = document.getElementById("marker-image")
-    markerImage2 = document.getElementById("marker-image2")
+    // Get reference to the marker images
+    markerImage = document.getElementById("marker-image");
+    markerImage2 = document.getElementById("marker-image2");
   
-    // Initially hide the image (optional)
+    // Initially hide the images
     if (markerImage) {
-      markerImage.setAttribute("visible", "false")
+        markerImage.setAttribute("visible", "false");
+    }
+    if (markerImage2) {
+        markerImage2.setAttribute("visible", "false");
     }
   
-    // When marker is found
+    // First marker events
     hiroMarker.addEventListener("markerFound", () => {
-      console.log("Marker found!")
-      markerVisible = true
-      updateStatus(true, "Marcador detectado")
+        console.log("Marker 1 found!");
+        markerVisible = true;
+        updateStatus(true, "Marcador detectado");
   
-      // Show the image
-      if (markerImage) {
-        markerImage.setAttribute("visible", "true")
-      }
+        if (markerImage) {
+            markerImage.setAttribute("visible", "true");
+        }
   
-      // Play audio if not already playing
-      if (!isAudioPlaying) {
-        playAudio()
-      }
-    })
+        if (!isAudioPlaying) {
+            playAudio();
+        }
+    });
   
-    // When marker is lost
     hiroMarker.addEventListener("markerLost", () => {
-      console.log("Marker lost!")
-      markerVisible = false
-      updateStatus(false, "Buscando marcador...")
+        console.log("Marker 1 lost!");
+        markerVisible = false;
+        updateStatus(false, "Buscando marcador...");
   
-      // Hide the image
-      if (markerImage) {
-        markerImage.setAttribute("visible", "false")
-      }
+        if (markerImage) {
+            markerImage.setAttribute("visible", "false");
+        }
   
-      // Pause audio when marker is lost
-      pauseAudio()
-    })
+        pauseAudio();
+    });
 
-
-
-
-    //PARTE 2 ELIMINAR
-    // When marker is found
+    // Second marker events
     hiroMarker2.addEventListener("markerFound", () => {
-      console.log("Marker found!")
-      markerVisible = true
-      updateStatus(true, "Marcador detectado")
+        console.log("Marker 2 found!");
+        markerVisible = true;
+        updateStatus(true, "Marcador detectado");
   
-      // Show the image
-      if (markerImage) {
-        markerImage.setAttribute("visible", "true")
-      }
+        if (markerImage2) {
+            markerImage2.setAttribute("visible", "true");
+        }
   
-      // Play audio if not already playing
-      if (!isAudioPlaying) {
-        playAudio2()
-      }
-    })
+        if (!isAudioPlaying) {
+            playAudio2();
+        }
+    });
   
-    // When marker is lost
     hiroMarker2.addEventListener("markerLost", () => {
-      console.log("Marker lost!")
-      markerVisible = false
-      updateStatus(false, "Buscando marcador...")
+        console.log("Marker 2 lost!");
+        markerVisible = false;
+        updateStatus(false, "Buscando marcador...");
   
-      // Hide the image
-      if (markerImage) {
-        markerImage.setAttribute("visible", "false")
-      }
+        if (markerImage2) {
+            markerImage2.setAttribute("visible", "false");
+        }
   
-      // Pause audio when marker is lost
-      pauseAudio2()
-    })
+        pauseAudio2();
+    });
 }
 
-// Play audio function
+// Audio functions for first marker
 function playAudio() {
     audioPlayer.play()
         .then(() => {
             isAudioPlaying = true;
-            console.log('Audio playing');
+            console.log('Audio 1 playing');
         })
         .catch(error => {
-            console.error('Error playing audio:', error);
-            // On mobile, autoplay might be blocked, so we need user interaction
-            showPlayButton();
+            console.error('Error playing audio 1:', error);
+            showPlayButton(audioPlayer);
         });
 }
 
-// Pause audio function
 function pauseAudio() {
     audioPlayer.pause();
     isAudioPlaying = false;
-    console.log('Audio paused');
+    console.log('Audio 1 paused');
 }
 
-
-//PARTE 2 BORRAR
-// Play audio function
+// Audio functions for second marker
 function playAudio2() {
     audioPlayer2.play()
         .then(() => {
             isAudioPlaying = true;
-            console.log('Audio playing');
+            console.log('Audio 2 playing');
         })
         .catch(error => {
-            console.error('Error playing audio:', error);
-            // On mobile, autoplay might be blocked, so we need user interaction
-            showPlayButton();
+            console.error('Error playing audio 2:', error);
+            showPlayButton(audioPlayer2);
         });
 }
 
-// Pause audio function
 function pauseAudio2() {
     audioPlayer2.pause();
     isAudioPlaying = false;
-    console.log('Audio paused');
+    console.log('Audio 2 paused');
 }
 
 // Update status indicator
@@ -200,7 +217,7 @@ function showError(message) {
 }
 
 // Show play button for mobile devices that block autoplay
-function showPlayButton() {
+function showPlayButton(audioElement) {
     const playButtonContainer = document.createElement('div');
     playButtonContainer.id = 'play-button-container';
     playButtonContainer.className = 'position-fixed bottom-0 start-0 w-100 p-3 text-center';
@@ -210,8 +227,9 @@ function showPlayButton() {
     playButton.className = 'btn btn-lg btn-primary';
     playButton.textContent = 'Reproducir Audio';
     playButton.addEventListener('click', () => {
-        playAudio();
-        playButtonContainer.remove();
+        audioElement.play()
+            .then(() => playButtonContainer.remove())
+            .catch(e => console.error('Still cannot play:', e));
     });
     
     playButtonContainer.appendChild(playButton);
@@ -223,8 +241,14 @@ document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
         // Pause audio when app is in background
         pauseAudio();
+        pauseAudio2();
     } else if (arInitialized && markerVisible) {
         // Resume audio if marker is visible when returning to app
-        playAudio();
+        // Need to check which marker is visible
+        if (markerImage && markerImage.getAttribute('visible') === 'true') {
+            playAudio();
+        } else if (markerImage2 && markerImage2.getAttribute('visible') === 'true') {
+            playAudio2();
+        }
     }
 });
