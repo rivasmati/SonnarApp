@@ -15,114 +15,96 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./styles/style.css">
 </head>
-<body>
-    <!-- Splash Screen con efecto de movimiento -->
+
+<body class="new-theme"> <!-- Cambiado de dark-theme a new-theme -->
+    <!-- Splash Screen (mantener estructura original) -->
     <div id="splash-screen" class="d-flex justify-content-center align-items-center">
         <div class="blur-rotation-container">
-            <img src="./assets/images/splash-logo.png" 
-                 alt="ETERO INSTANTE AUSTRALI" 
-                 class="rotating-logo blur-rotation">
-            <img src="./assets/images/splash-logo.png" 
-                 alt="ETERO INSTANTE AUSTRALI" 
-                 class="rotating-logo-back">
+            <img src="./assets/images/splash-logo.png" alt="ETERO INSTANTE AUSTRALI" class="rotating-logo blur-rotation">
+            <img src="./assets/images/splash-logo.png" alt="ETERO INSTANTE AUSTRALI" class="rotating-logo-back">
         </div>
     </div>
 
-    <!-- Contenido principal (oculto inicialmente) -->
+    <!-- Main Content -->
     <div class="container-fluid p-0 m-0 d-none" id="main-content">
         <!-- Loading Screen -->
         <div id="loading-screen" class="d-flex flex-column justify-content-center align-items-center">
-            <div class="spinner-border text-primary mb-3" role="status">
+            <div class="spinner-border text-neon" role="status">
                 <span class="visually-hidden">Cargando...</span>
             </div>
-            <h2>Iniciando cámara...</h2>
-            <p>Por favor permite el acceso a la cámara cuando se te solicite</p>
+            <h2 class="text-light mt-3">Iniciando cámara...</h2>
+            <p class="text-muted">Por favor permite el acceso a la cámara</p>
         </div>
 
         <!-- Instructions -->
-<div id="instructions" class="d-none text-center p-3">
-    <h2>Selecciona un álbum</h2>
-    <p>Elige un marcador para reproducir su audio</p>
-    
-    <div class="album-container d-flex justify-content-center flex-wrap">
-        <!-- Álbum 1 -->
-        <div class="album-card mx-2">
-            <img src="./assets/markers/HIRO.jpg" alt="Álbum 1" class="img-fluid marker-preview mb-2">
-            <p class="album-title">Álbum 1</p>
+        <div id="instructions" class="d-none text-center p-4">
+            <h2 class="text-neon mb-4">Selecciona un álbum</h2>
+            <p class="text-muted mb-4">Enfoca un marcador para descubrir su sonido</p>
+            
+            <div class="album-container d-flex justify-content-center flex-wrap gap-4">
+                <div class="album-card">
+                    <div class="glow-border">
+                        <img src="./assets/markers/HIRO.jpg" alt="Álbum 1" class="img-fluid marker-preview">
+                    </div>
+                    <p class="album-title mt-2">NOISE01</p>
+                </div>
+                <div class="album-card">
+                    <div class="glow-border">
+                        <img src="./assets/markers/Prueba.jpeg" alt="Álbum 2" class="img-fluid marker-preview">
+                    </div>
+                    <p class="album-title mt-2">FUZZ02</p>
+                </div>
+                <div class="album-card">
+                    <div class="glow-border">
+                        <img src="./assets/markers/Prueba2.png" alt="Álbum 3" class="img-fluid marker-preview">
+                    </div>
+                    <p class="album-title mt-2">FEEDBACK03</p>
+                </div>
+                <div class="album-card">
+                    <div class="glow-border">
+                        <img src="./assets/markers/album4.jpg" alt="Álbum 4" class="img-fluid marker-preview">
+                    </div>
+                    <p class="album-title mt-2">STATIC04</p>
+                </div>
+            </div>
+            
+            <button id="start-button" class="btn btn-neon mt-4">Comenzar Experiencia</button>
         </div>
-        
-        <!-- Álbum 2 -->
-        <div class="album-card mx-2">
-            <img src="./assets/markers/Prueba.jpeg" alt="Álbum 2" class="img-fluid marker-preview mb-2">
-            <p class="album-title">Álbum 2</p>
-        </div>
-        
-        <!-- Álbum 3 -->
-        <div class="album-card mx-2">
-            <img src="./assets/markers/Prueba2.png" alt="Álbum 3" class="img-fluid marker-preview mb-2">
-            <p class="album-title">Álbum 3</p>
-        </div>
-        
-        <!-- Álbum 4 -->
-        <div class="album-card mx-2">
-            <img src="./assets/markers/album4.jpg" alt="Álbum 4" class="img-fluid marker-preview mb-2">
-            <p class="album-title">Álbum 4</p>
-        </div>
-    </div>
-    
-    <button id="start-button" class="btn btn-primary mt-3">Comenzar</button>
-</div>
 
-        <!-- AR Scene (hidden initially) -->
+        <!-- AR Scene -->
         <div id="ar-container" class="d-none">
-            <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix;">
-                <!-- Marker definition -->
-                <a-marker preset="custom" id="hiro-marker" url="assets/markers/microfono.patt" type="pattern">
-                    <!-- Image that will appear on top of the marker -->
-                    <a-image
-                        src="./assets/images/Prueba.jpeg"
-                        position="0 0.1 0"
-                        rotation="-90 0 0"
-                        width="1"
-                        height="1"
-                        scale="1 1 1"
-                        id="marker-image">
-                    </a-image>
+            <a-scene 
+                embedded 
+                arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix;"
+                renderer="logarithmicDepthBuffer: true; precision: medium;"
+                vr-mode-ui="enabled: false">
+                
+                <a-entity light="type: ambient; color: #FFF; intensity: 1"></a-entity>
+                
+                <a-marker preset="custom" id="hiro-marker" url="assets/markers/microfono.patt" type="pattern" emitevents="true">
+                    <a-image src="./assets/images/Prueba.jpeg" position="0 0.1 0" rotation="-90 0 0" width="0.8" height="0.8" id="marker-image"></a-image>
                 </a-marker>
 
-                <a-marker preset="hiro" id="hiro-marker2">
-                   <!-- Image that will appear on top of the marker -->
-                   <a-image
-                       src="./assets/images/Prueba2.png"
-                       position="0 0.1 0"
-                       rotation="-90 0 0"
-                       width="1"
-                       height="1"
-                       scale="1 1 1"
-                       id="marker-image2">
-                   </a-image>
+                <a-marker preset="hiro" id="hiro-marker2" emitevents="true">
+                    <a-image src="./assets/images/Prueba2.png" position="0 0.1 0" rotation="-90 0 0" width="0.8" height="0.8" id="marker-image2"></a-image>
                 </a-marker>
                 
-                <!-- Camera -->
                 <a-entity camera></a-entity>
             </a-scene>
         </div>
 
-        <!-- Audio player (hidden) -->
+        <!-- Audio Players -->
         <audio id="audio-player" preload="auto">
             <source src="./assets/audio/RUINAS-DE-SAL-VOZ-REC.mp3" type="audio/mpeg">
-            Tu navegador no soporta el elemento de audio.
         </audio>
-
         <audio id="audio-player2" preload="auto">
             <source src="./assets/audio/Miranda!, TINI - Me Gusta (Official Video) - MirandaOficialVEVO.mp3" type="audio/mpeg">
-            Tu navegador no soporta el elemento de audio.
         </audio>
 
-        <!-- Status indicator -->
+        <!-- Status Indicator -->
         <div id="status-indicator" class="d-none">
-            <div class="status-circle"></div>
-            <p id="status-text">Buscando marcador...</p>
+            <div class="status-pulse"></div>
+            <p id="status-text">Buscando señal...</p>
         </div>
     </div>
 

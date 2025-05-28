@@ -1,25 +1,37 @@
-body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
+/* styles.css */
+:root {
+    --primary-bg: #da5050;  /* Color bordo */
+    --neon-accent: #9b99ff;  /* Turquesa */
+    --dark-bg: #000000;
+    --text-primary: #ffffff;
 }
 
-/* Splash Screen con efecto de movimiento */
+body.new-theme {
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+}
+
+/* Splash Screen Animations */
 #splash-screen {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: white;
+    background: var(--primary-bg) !important;
     z-index: 2000;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
 }
 
 .blur-rotation-container {
     position: relative;
     width: 300px;
     height: 300px;
+    filter: drop-shadow(0 0 15px rgba(64, 224, 208, 0.4));
 }
 
 .rotating-logo {
@@ -27,12 +39,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
-}
-
-.blur-rotation {
-    animation: rotateWithBlur 1.5s linear infinite;
-    filter: blur(2px);
-    opacity: 0.8;
+    animation: rotateWithBlur 2s linear infinite !important;
 }
 
 .rotating-logo-back {
@@ -40,70 +47,65 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    animation: rotate 3s linear infinite;
+    animation: rotate 3s linear infinite !important;
+    opacity: 0.7;
 }
 
 @keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 @keyframes rotateWithBlur {
-    from {
+    0% {
         transform: rotate(0deg);
-        filter: blur(2px);
-        opacity: 0.7;
+        filter: blur(3px) brightness(1.2);
     }
     50% {
-        filter: blur(4px);
-        opacity: 0.5;
+        transform: rotate(180deg);
+        filter: blur(6px) brightness(1.5);
+        opacity: 0.8;
     }
-    to {
+    100% {
         transform: rotate(360deg);
-        filter: blur(2px);
-        opacity: 0.7;
+        filter: blur(3px) brightness(1.2);
     }
 }
 
-/* Efecto de salida */
 .splash-fade-out {
-    animation: fadeOut 0.8s ease-out forwards;
+    animation: fadeOut 1s ease-out forwards !important;
 }
 
 @keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-        visibility: hidden;
-    }
+    from { opacity: 1; }
+    to { opacity: 0; visibility: hidden; }
 }
 
-/* Loading screen */
+/* Loading Screen */
 #loading-screen {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: white;
+    background: rgba(10, 10, 10, 0.95);
     z-index: 1000;
     text-align: center;
 }
 
-/* Instructions screen */
+.spinner-border.text-neon {
+    border-color: var(--neon-accent);
+    border-right-color: transparent;
+}
+
+/* Instructions */
 #instructions {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: white;
+    background: var(--primary-bg);
     z-index: 900;
     display: flex;
     flex-direction: column;
@@ -111,13 +113,41 @@ body {
     align-items: center;
 }
 
-.marker-preview {
-    max-width: 200px;
-    border: 1px solid #ccc;
-    margin: 20px 0;
+/* Album Grid */
+.album-container {
+    max-width: 1200px;
+    padding: 2rem;
+    gap: 2rem;
 }
 
-/* AR container takes full screen */
+.album-card {
+    width: 200px;
+    cursor: pointer;
+}
+
+.glow-border {
+    border: 2px solid rgba(64, 224, 208, 0.3);
+    border-radius: 12px;
+    padding: 8px;
+    transition: none;
+}
+
+.marker-preview {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.album-title {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-top: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* AR Container */
 #ar-container {
     position: fixed;
     top: 0;
@@ -125,77 +155,71 @@ body {
     width: 100%;
     height: 100%;
     z-index: 10;
+    display: none !important;
 }
 
-/* Status indicator */
+/* Status Indicator */
 #status-indicator {
     position: fixed;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--neon-accent);
+    padding: 12px 24px;
+    border-radius: 30px;
+    border: 1px solid var(--neon-accent);
+    box-shadow: 0 0 15px rgba(64, 224, 208, 0.3);
     display: flex;
     align-items: center;
-    z-index: 100;
+    gap: 12px;
 }
 
-.status-circle {
+.status-pulse {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background-color: red;
-    margin-right: 10px;
+    background: var(--neon-accent);
+    animation: pulse 1.5s infinite;
 }
 
-.status-active .status-circle {
-    background-color: green;
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(64, 224, 208, 0.4); }
+    70% { box-shadow: 0 0 0 12px rgba(64, 224, 208, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(64, 224, 208, 0); }
 }
 
-/* ===== [NUEVO] Asegurar que el contenedor AR esté oculto inicialmente ===== */
-#ar-container {
-    display: none !important;
-    visibility: hidden !important;
+/* Botones */
+.btn-neon {
+    background: transparent;
+    border: 2px solid var(--neon-accent);
+    color: var(--neon-accent);
+    padding: 12px 24px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
 }
 
-/* ===== [NUEVO] Estilos para los álbumes ===== */
-.album-container {
-    max-width: 800px;
-    margin: 0 auto;
+.btn-neon:hover {
+    background: rgba(64, 224, 208, 0.1);
+    box-shadow: 0 0 15px var(--neon-accent);
 }
 
-.album-card {
-    width: 180px;
-    text-align: center;
-    margin-bottom: 15px;
-    transition: transform 0.3s;
-}
-
-.album-card:hover {
-    transform: scale(1.05);
-}
-
-.album-title {
-    font-weight: 500;
-    margin-top: 5px;
-}
-
-.marker-preview {
-    max-width: 150px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    cursor: pointer;
-}
-
+/* Responsive */
 @media (max-width: 768px) {
     .album-card {
-        width: 140px;
+        width: 45%;
     }
     
     .marker-preview {
-        max-width: 120px;
+        height: 140px;
     }
+}
+
+.blink {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
 }
