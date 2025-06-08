@@ -3,17 +3,23 @@ const loadingScreen = document.getElementById('loading-screen');
 const instructions = document.getElementById('instructions');
 const startButton = document.getElementById('start-button');
 const arContainer = document.getElementById('ar-container');
-const audioPlayer = document.getElementById('audio-player');
 const statusIndicator = document.getElementById('status-indicator');
 const statusText = document.getElementById('status-text');
 const splashScreen = document.getElementById('splash-screen');
 const mainContent = document.getElementById('main-content');
 const albumCards = document.querySelectorAll('.album-card');
 
+const audioPlayer1 = document.getElementById('audio-player1');
+const audioPlayer2 = document.getElementById('audio-player2');
+const audioPlayer3 = document.getElementById('audio-player3');
+const audioPlayer4 = document.getElementById('audio-player4');
+const audioPlayer5 = document.getElementById('audio-player5');
+const audioPlayer6 = document.getElementById('audio-player6');
+
 let isAudioPlaying = false;
 let markerVisible = false;
 let arInitialized = false;
-let markerImage, markerImage2;
+let markerImage1, markerImage2, markerImage3, markerImage4, markerImage5, markerImage6;
 
 // Force full height on mobile browsers
 function setFullHeight() {
@@ -99,33 +105,53 @@ function setupAR() {
     arInitialized = true;
     
     // Obtener referencias a los elementos de imagen
-    markerImage = document.getElementById("marker-image");
+    markerImage1 = document.getElementById("marker-image1");
     markerImage2 = document.getElementById("marker-image2");
+    markerImage3 = document.getElementById("marker-image3");
+    markerImage4 = document.getElementById("marker-image4");
+    markerImage5 = document.getElementById("marker-image5");
+    markerImage6 = document.getElementById("marker-image6");
     
     // Obtener referencias a los marcadores
-    const hiroMarker = document.getElementById('hiro-marker');
+    const hiroMarker1 = document.getElementById('hiro-marker1');
     const hiroMarker2 = document.getElementById('hiro-marker2');
+    const hiroMarker3 = document.getElementById('hiro-marker3');
+    const hiroMarker4= document.getElementById('hiro-marker4');
+    const hiroMarker5= document.getElementById('hiro-marker5');
+    const hiroMarker6 = document.getElementById('hiro-marker6');
     
     // Verificar que los elementos existen
-    console.log("Marker Image 1:", markerImage);
+    console.log("Marker Image 1:", markerImage1);
     console.log("Marker Image 2:", markerImage2);
-    console.log("Hiro Marker 1:", hiroMarker);
+    console.log("Marker Image 3:", markerImage3);
+    console.log("Marker Image 4:", markerImage4);
+    console.log("Marker Image 5:", markerImage5);
+    console.log("Marker Image 6:", markerImage6);
+    console.log("Hiro Marker 1:", hiroMarker1);
     console.log("Hiro Marker 2:", hiroMarker2);
+    console.log("Hiro Marker 3:", hiroMarker3);
+    console.log("Hiro Marker 4:", hiroMarker4);
+    console.log("Hiro Marker 5:", hiroMarker5);
+    console.log("Hiro Marker 6:", hiroMarker6);
     
     // Asegurarse de que las imágenes estén inicialmente ocultas
-    if (markerImage) markerImage.setAttribute("visible", "false");
+    if (markerImage1) markerImage1.setAttribute("visible", "false");
     if (markerImage2) markerImage2.setAttribute("visible", "false");
+    if (markerImage3) markerImage3.setAttribute("visible", "false");
+    if (markerImage4) markerImage4.setAttribute("visible", "false");
+    if (markerImage5) markerImage5.setAttribute("visible", "false");
+    if (markerImage6) markerImage6.setAttribute("visible", "false");
 
     // Configurar eventos para el primer marcador
-    if (hiroMarker) {
-        hiroMarker.addEventListener("markerFound", () => {
+    if (hiroMarker1) {
+        hiroMarker1.addEventListener("markerFound", () => {
             console.log("Marcador 1 encontrado");
-            handleMarkerFound(markerImage, audioPlayer);
+            handleMarkerFound(markerImage1, audioPlayer1);
         });
         
-        hiroMarker.addEventListener("markerLost", () => {
+        hiroMarker1.addEventListener("markerLost", () => {
             console.log("Marcador 1 perdido");
-            handleMarkerLost(markerImage, audioPlayer);
+            handleMarkerLost(markerImage1, audioPlayer1);
         });
     }
     
@@ -139,6 +165,58 @@ function setupAR() {
         hiroMarker2.addEventListener("markerLost", () => {
             console.log("Marcador 2 perdido");
             handleMarkerLost(markerImage2, audioPlayer2);
+        });
+    }
+    
+    // Configurar eventos para el tercer marcador
+    if (hiroMarker3) {
+        hiroMarker3.addEventListener("markerFound", () => {
+            console.log("Marcador 3 encontrado");
+            handleMarkerFound(markerImage3, audioPlayer3);
+        });
+        
+        hiroMarker3.addEventListener("markerLost", () => {
+            console.log("Marcador 3 perdido");
+            handleMarkerLost(markerImage3, audioPlayer3);
+        });
+    }
+    
+    // Configurar eventos para el cuarto marcador
+    if (hiroMarker4) {
+        hiroMarker4.addEventListener("markerFound", () => {
+            console.log("Marcador 4 encontrado");
+            handleMarkerFound(markerImage4, audioPlayer4);
+        });
+        
+        hiroMarker4.addEventListener("markerLost", () => {
+            console.log("Marcador 4 perdido");
+            handleMarkerLost(markerImage4, audioPlayer4);
+        });
+    }
+    
+    // Configurar eventos para el quinto marcador
+    if (hiroMarker5) {
+        hiroMarker5.addEventListener("markerFound", () => {
+            console.log("Marcador 5 encontrado");
+            handleMarkerFound(markerImage5, audioPlayer5);
+        });
+        
+        hiroMarker5.addEventListener("markerLost", () => {
+            console.log("Marcador 5 perdido");
+            handleMarkerLost(markerImage5, audioPlayer5);
+        });
+    }
+    
+    // Configurar eventos para el sexto marcador
+    if (hiroMarker6) {
+        hiroMarker6.addEventListener("markerFound", () => {
+            console.log("Marcador 6 encontrado");
+            handleMarkerFound(markerImage6, audioPlayer6);
+        });
+        
+        hiroMarker6.addEventListener("markerLost", () => {
+            console.log("Marcador 6 perdido");
+            handleMarkerLost(markerImage6, audioPlayer6);
         });
     }
 }
@@ -182,7 +260,7 @@ function playAudio(element) {
             })
             .catch(err => {
                 console.error("Error al reproducir audio:", err);
-                showPlayButton(element);
+                //showPlayButton(element);
             });
     }
 }
@@ -209,6 +287,7 @@ function showError(message) {
     `;
 }
 
+/*
 function showPlayButton(audioElement) {
     const container = document.createElement('div');
     container.className = 'position-fixed bottom-0 start-0 w-100 p-3 text-center';
@@ -221,19 +300,36 @@ function showPlayButton(audioElement) {
     container.appendChild(button);
     document.body.appendChild(container);
 }
+    */
 
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
         // Pausar audio cuando la app está en segundo plano
-        if (audioPlayer) pauseAudio(audioPlayer);
+        if (audioPlayer1) pauseAudio(audioPlayer1);
         if (audioPlayer2) pauseAudio(audioPlayer2);
+        if (audioPlayer3) pauseAudio(audioPlayer3);
+        if (audioPlayer4) pauseAudio(audioPlayer4);
+        if (audioPlayer5) pauseAudio(audioPlayer5);
+        if (audioPlayer6) pauseAudio(audioPlayer6);
     } else if (arInitialized && markerVisible) {
         // Reanudar audio si el marcador es visible al volver a la app
-        if (markerImage && markerImage.getAttribute('visible') === 'true') {
-            playAudio(audioPlayer);
+        if (markerImage1 && markerImage1.getAttribute('visible') === 'true') {
+            playAudio(audioPlayer1);
         }
         if (markerImage2 && markerImage2.getAttribute('visible') === 'true') {
             playAudio(audioPlayer2);
+        }
+        if (markerImage3 && markerImage3.getAttribute('visible') === 'true') {
+            playAudio(audioPlayer3);
+        }
+        if (markerImage4 && markerImage4.getAttribute('visible') === 'true') {
+            playAudio(audioPlayer4);
+        }
+        if (markerImage5 && markerImage5.getAttribute('visible') === 'true') {
+            playAudio(audioPlayer5);
+        }
+        if (markerImage6 && markerImage6.getAttribute('visible') === 'true') {
+            playAudio(audioPlayer6);
         }
     }
 });

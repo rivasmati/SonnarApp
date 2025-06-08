@@ -97,13 +97,23 @@ body.new-theme {
 
 @media (max-width: 992px) { 
     #instructions{
-        margin-top: 7%;
+        margin-top: 2%;
+    }
+
+    #instructions img {
+    height: 100px !important;
+    width: 100px !important;
     }
  }
 
 @media (min-width: 992px) { 
     #instructions{
-        margin-top: 15%;
+        margin-top: 6%;
+    }
+
+    #instructions img {
+    height: 180px;
+    width: 180px;
     }
  }
 

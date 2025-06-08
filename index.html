@@ -35,7 +35,7 @@
                 <span class="visually-hidden">Cargando...</span>
             </div>
             <h2 class="text-light mt-3">Iniciando cámara...</h2>
-            <p class="text-muted">Por favor permite el acceso a la cámara</p>
+            <p class="text-secondary-emphasis">Por favor permite el acceso a la cámara</p>
         </div>
 
         <!-- Instructions -->
@@ -44,30 +44,42 @@
                 <h2 class="text-neon">Selecciona un álbum</h2>
                 <p class="text-muted">Enfoca un marcador para descubrir su sonido</p>
         
-                <div class="row row-cols-2 row-cols-md-4">
-                    <div class="album-card">
+                <div class="row row-cols-2 row-cols-md-3">
+                    <div class="album-card col">
                         <div class="glow-border">
-                            <img src="./assets/markers/HIRO.jpg" alt="Álbum1" class="img-fluid marker-preview">
+                            <img src="./assets/markers/pattern-microfono.png" alt="Runas de Sal" class="img-fluid marker-preview">
                         </div>
-                        <p class="album-title mt-2">NOISE01</p>
+                        <p class="album-title mt-2">Ruinas de Sal</p>
                     </div>
-                    <div class="album-card">
+                    <div class="album-card col">
                         <div class="glow-border">
-                            <img src="./assets/markers/Cantante.png" alt="Álbum 2" class="img-fluid marker-preview">
+                            <img src="./assets/markers/pattern-bajo.png" alt="Sol de Mayo" class="img-fluid marker-preview">
                         </div>
-                        <p class="album-title mt-2">FUZZ02</p>
+                        <p class="album-title mt-2">Sol de Mayo</p>
                     </div>
-                    <div class="album-card">
+                    <div class="album-card col">
                         <div class="glow-border">
-                            <img src="./assets/markers/pattern-WhatsApp Image 2025-05-05 at 20.42.09.png" alt="Álbum 3" class="img-fluid marker-preview">
+                            <img src="./assets/markers/pattern-guitarra2.png" alt="Desnudandote" class="img-fluid marker-preview">
                         </div>
-                        <p class="album-title mt-2">FEEDBACK03</p>
+                        <p class="album-title mt-2">Desnudandote</p>
                     </div>
-                    <div class="album-card">
+                    <div class="album-card col">
                         <div class="glow-border">
-                            <img src="./assets/markers/HIRO.jpg" alt="Álbum 4" class="img-fluid marker-preview">
+                            <img src="./assets/markers/pattern-platillo.png" alt="Huellas" class="img-fluid marker-preview">
                         </div>
-                        <p class="album-title mt-2">STATIC04</p>
+                        <p class="album-title mt-2">Huellas</p>
+                    </div>
+                    <div class="album-card col">
+                        <div class="glow-border">
+                            <img src="./assets/markers/pattern-pandereta.png" alt="Hay algo que está muerto" class="img-fluid marker-preview">
+                        </div>
+                        <p class="album-title mt-2">Hay algo que está muerto</p>
+                    </div>
+                    <div class="album-card col">
+                        <div class="glow-border">
+                            <img src="./assets/markers/pattern-guitarra.png" alt="Escudos" class="img-fluid marker-preview">
+                        </div>
+                        <p class="album-title mt-2">Escudos</p>
                     </div>
                 </div>
             
@@ -84,13 +96,35 @@
                 vr-mode-ui="enabled: false">
                 
                 <a-entity light="type: ambient; color: #FFF; intensity: 1"></a-entity>
-                
-                <a-marker preset="custom" id="hiro-marker" url="assets/markers/microfono.patt" type="pattern" emitevents="true">
-                    <a-image src="./assets/images/Prueba.jpeg" position="0 0.1 0" rotation="-90 0 0" width="1" height="1" id="marker-image" visible="false"></a-image>
+                <!--Microfono, Bajo, Guitarra2, platillo, pandereta, guitarra-->
+                <!-- Ruinas de Sal -->
+                <a-marker preset="custom" id="hiro-marker1" url="assets/markers/pattern-microfono-NO.patt" type="pattern" emitevents="true">
+                    <a-image src="./assets/images/Prueba.jpeg" position="0 0.1 0" rotation="-90 0 0" width="1" height="1" id="marker-image1" visible="false"></a-image>
                 </a-marker>
 
-                <a-marker preset="hiro" id="hiro-marker2" emitevents="true">
-                    <a-image src="./assets/images/Prueba2.png" position="0 0.1 0" rotation="-90 0 0" width="1" height="1" id="marker-image2" visible="false"></a-image>
+                <!-- Sol de Mayo -->
+                <a-marker preset="custom" id="hiro-marker2" url="assets/markers/pattern-bajo-NO.patt" type="pattern" emitevents="true">
+                    <a-image src="./assets/images/Prueba.jpeg" position="0 0.1 0" rotation="-90 0 0" width="1" height="1" id="marker-image2" visible="false"></a-image>
+                </a-marker>
+
+                <!-- Desnudandote - NO LO TOMA -->
+                <a-marker preset="custom" id="hiro-marker3" url="assets/markers/pattern-guitarra2-NO.patt" type="pattern" emitevents="true">
+                    <a-image src="./assets/images/Prueba.jpeg" position="0 0.1 0" rotation="-90 0 0" width="1" height="1" id="marker-image3" visible="false"></a-image>
+                </a-marker>
+
+                <!-- Huellas - NO LO TOMA -->
+                <a-marker preset="custom" id="hiro-marker4" url="assets/markers/pattern-platillo-NO.patt" type="pattern" emitevents="true">
+                    <a-image src="./assets/images/Prueba.jpeg" position="0 0.1 0" rotation="-90 0 0" width="1" height="1" id="marker-image4" visible="false"></a-image>
+                </a-marker>
+
+                <!-- Hay algo que esta muerto - NO LO TOMA -->
+                <a-marker preset="custom" id="hiro-marker5" url="assets/markers/pattern-pandereta-NO.patt" type="pattern" emitevents="true">
+                    <a-image src="./assets/images/Prueba.jpeg" position="0 0.1 0" rotation="-90 0 0" width="1" height="1" id="marker-image5" visible="false"></a-image>
+                </a-marker>
+
+                <!-- Escudos -->
+                <a-marker preset="custom" id="hiro-marker6" url="assets/markers/pattern-guitarra-NO.patt" type="pattern" emitevents="true">
+                    <a-image src="./assets/images/Prueba.jpeg" position="0 0.1 0" rotation="-90 0 0" width="1" height="1" id="marker-image6" visible="false"></a-image>
                 </a-marker>
                 
                 <a-entity camera look-controls="enabled: false" position="0 0 0"></a-entity>
@@ -98,11 +132,29 @@
         </div>
 
         <!-- Audio Players -->
-        <audio id="audio-player" preload="auto">
-            <source src="./assets/audio/RUINAS-DE-SAL-VOZ-REC.mp3" type="audio/mpeg">
+        <!-- Ruinas de Sal -->
+        <audio id="audio-player1" preload="auto">
+            <source src="./assets/audio/Ruinas de Sal - Eterno Instante.mp3" type="audio/mpeg">
         </audio>
+        <!-- Sol de Mayo -->
         <audio id="audio-player2" preload="auto">
-            <source src="./assets/audio/Miranda!, TINI - Me Gusta (Official Video) - MirandaOficialVEVO.mp3" type="audio/mpeg">
+            <source src="./assets/audio/Sol de Mayo - Eterno Instante.mp3" type="audio/mpeg">
+        </audio>
+        <!-- Desnudandote -->
+        <audio id="audio-player3" preload="auto">
+            <source src="./assets/audio/Desnudandote - Eterno Instante.mp3" type="audio/mpeg">
+        </audio>
+        <!-- Huellas -->
+        <audio id="audio-player4" preload="auto">
+            <source src="./assets/audio/Huellas - Eterno Instante.mp3" type="audio/mpeg">
+        </audio>
+        <!-- Hay algo que esta muerto -->
+        <audio id="audio-player5" preload="auto">
+            <source src="./assets/audio/Hay algo que esta muerto - Eterno Instante.mp3" type="audio/mpeg">
+        </audio>
+        <!-- Escudos -->
+        <audio id="audio-player6" preload="auto">
+            <source src="./assets/audio/Escudos - Eterno Instante.mp3" type="audio/mpeg">
         </audio>
 
         <!-- Status Indicator -->
