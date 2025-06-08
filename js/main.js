@@ -6,9 +6,6 @@ const arContainer = document.getElementById('ar-container');
 const audioPlayer = document.getElementById('audio-player');
 const statusIndicator = document.getElementById('status-indicator');
 const statusText = document.getElementById('status-text');
-const hiroMarker = document.getElementById('hiro-marker');
-const hiroMarker2 = document.getElementById('hiro-marker2');
-const audioPlayer2 = document.getElementById('audio-player2');
 const splashScreen = document.getElementById('splash-screen');
 const mainContent = document.getElementById('main-content');
 const albumCards = document.querySelectorAll('.album-card');
@@ -17,6 +14,15 @@ let isAudioPlaying = false;
 let markerVisible = false;
 let arInitialized = false;
 let markerImage, markerImage2;
+
+// Force full height on mobile browsers
+function setFullHeight() {
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+}
+
+window.addEventListener('resize', setFullHeight);
+window.addEventListener('orientationchange', setFullHeight);
+setFullHeight();
 
 document.addEventListener('DOMContentLoaded', () => {
     // Reiniciar animaciones
@@ -38,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initializeApp() {
+    // Inicialmente oculto, se mostrará cuando se inicie la experiencia AR
     arContainer.style.display = 'none';
     
     albumCards.forEach(card => {
@@ -64,15 +71,21 @@ function startARExperience() {
     startButton.classList.add('disabled');
     startButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Iniciando...';
 
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
         .then(() => {
             instructions.classList.add('d-none');
             arContainer.style.display = 'block';
             statusIndicator.classList.remove('d-none');
             
             const scene = document.querySelector('a-scene');
-            if (scene.hasLoaded) setupAR();
-            else scene.addEventListener('loaded', setupAR);
+            if (scene.hasLoaded) {
+                setupAR();
+                updateARViewport();
+            }
+            else scene.addEventListener('loaded', () => {
+                setupAR();
+                updateARViewport();
+            });
         })
         .catch(err => {
             console.error("Error cámara:", err);
@@ -85,43 +98,101 @@ function startARExperience() {
 function setupAR() {
     arInitialized = true;
     
+    // Obtener referencias a los elementos de imagen
     markerImage = document.getElementById("marker-image");
     markerImage2 = document.getElementById("marker-image2");
     
-    [markerImage, markerImage2].forEach(img => {
-        if(img) img.setAttribute("visible", "false");
-    });
-
-    hiroMarker.addEventListener("markerFound", () => handleMarkerFound(markerImage, audioPlayer));
-    hiroMarker.addEventListener("markerLost", () => handleMarkerLost(markerImage, audioPlayer));
+    // Obtener referencias a los marcadores
+    const hiroMarker = document.getElementById('hiro-marker');
+    const hiroMarker2 = document.getElementById('hiro-marker2');
     
-    hiroMarker2.addEventListener("markerFound", () => handleMarkerFound(markerImage2, audioPlayer2));
-    hiroMarker2.addEventListener("markerLost", () => handleMarkerLost(markerImage2, audioPlayer2));
+    // Verificar que los elementos existen
+    console.log("Marker Image 1:", markerImage);
+    console.log("Marker Image 2:", markerImage2);
+    console.log("Hiro Marker 1:", hiroMarker);
+    console.log("Hiro Marker 2:", hiroMarker2);
+    
+    // Asegurarse de que las imágenes estén inicialmente ocultas
+    if (markerImage) markerImage.setAttribute("visible", "false");
+    if (markerImage2) markerImage2.setAttribute("visible", "false");
+
+    // Configurar eventos para el primer marcador
+    if (hiroMarker) {
+        hiroMarker.addEventListener("markerFound", () => {
+            console.log("Marcador 1 encontrado");
+            handleMarkerFound(markerImage, audioPlayer);
+        });
+        
+        hiroMarker.addEventListener("markerLost", () => {
+            console.log("Marcador 1 perdido");
+            handleMarkerLost(markerImage, audioPlayer);
+        });
+    }
+    
+    // Configurar eventos para el segundo marcador
+    if (hiroMarker2) {
+        hiroMarker2.addEventListener("markerFound", () => {
+            console.log("Marcador 2 encontrado");
+            handleMarkerFound(markerImage2, audioPlayer2);
+        });
+        
+        hiroMarker2.addEventListener("markerLost", () => {
+            console.log("Marcador 2 perdido");
+            handleMarkerLost(markerImage2, audioPlayer2);
+        });
+    }
 }
 
 function handleMarkerFound(imageElement, audioElement) {
     markerVisible = true;
     updateStatus(true, "Marcador detectado");
-    if(imageElement) imageElement.setAttribute("visible", "true");
-    if(!isAudioPlaying) playAudio(audioElement);
+    
+    // Mostrar la imagen
+    if (imageElement) {
+        console.log("Mostrando imagen:", imageElement.getAttribute("src"));
+        imageElement.setAttribute("visible", "true");
+    }
+    
+    // Reproducir audio
+    if (!isAudioPlaying) {
+        playAudio(audioElement);
+    }
 }
 
 function handleMarkerLost(imageElement, audioElement) {
     markerVisible = false;
     updateStatus(false, "Buscando...");
-    if(imageElement) imageElement.setAttribute("visible", "false");
+    
+    // Ocultar la imagen
+    if (imageElement) {
+        console.log("Ocultando imagen:", imageElement.getAttribute("src"));
+        imageElement.setAttribute("visible", "false");
+    }
+    
+    // Pausar audio
     pauseAudio(audioElement);
 }
 
 function playAudio(element) {
-    element.play()
-        .then(() => { isAudioPlaying = true; })
-        .catch(err => showPlayButton(element));
+    if (element) {
+        element.play()
+            .then(() => { 
+                isAudioPlaying = true;
+                console.log("Audio reproduciendo");
+            })
+            .catch(err => {
+                console.error("Error al reproducir audio:", err);
+                showPlayButton(element);
+            });
+    }
 }
 
 function pauseAudio(element) {
-    element.pause();
-    isAudioPlaying = false;
+    if (element) {
+        element.pause();
+        isAudioPlaying = false;
+        console.log("Audio pausado");
+    }
 }
 
 function updateStatus(active, message) {
@@ -153,10 +224,42 @@ function showPlayButton(audioElement) {
 
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
-        [audioPlayer, audioPlayer2].forEach(pauseAudio);
+        // Pausar audio cuando la app está en segundo plano
+        if (audioPlayer) pauseAudio(audioPlayer);
+        if (audioPlayer2) pauseAudio(audioPlayer2);
     } else if (arInitialized && markerVisible) {
-        [markerImage, markerImage2].forEach((img, i) => {
-            if(img?.getAttribute('visible') === 'true') playAudio(i === 0 ? audioPlayer : audioPlayer2);
-        });
+        // Reanudar audio si el marcador es visible al volver a la app
+        if (markerImage && markerImage.getAttribute('visible') === 'true') {
+            playAudio(audioPlayer);
+        }
+        if (markerImage2 && markerImage2.getAttribute('visible') === 'true') {
+            playAudio(audioPlayer2);
+        }
     }
 });
+
+// Función para actualizar el viewport de AR
+function updateARViewport() {
+    const scene = document.querySelector('a-scene');
+    if (scene) {
+        const canvas = scene.canvas;
+        if (canvas) {
+            // Configurar dimensiones del canvas para que coincida con el viewport
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            canvas.style.position = 'absolute';
+            canvas.style.top = '0';
+            canvas.style.left = '0';
+            canvas.style.objectFit = 'cover';
+            
+            // Forzar a AR.js a recalcular la proyección de la cámara
+            if (scene.camera && scene.camera.updateProjectionMatrix) {
+                scene.camera.aspect = window.innerWidth / window.innerHeight;
+                scene.camera.updateProjectionMatrix();
+            }
+        }
+    }
+}
+
+// Añadir listener para el evento resize
+window.addEventListener('resize', updateARViewport);

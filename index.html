@@ -2,7 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimun-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>SonnarApp</title>
     
     <!-- Bootstrap CSS -->
@@ -16,17 +18,17 @@
     <link rel="stylesheet" href="./styles/style.css">
 </head>
 
-<body class="new-theme"> <!-- Cambiado de dark-theme a new-theme -->
+<body class="new-theme">
     <!-- Splash Screen (mantener estructura original) -->
-    <div id="splash-screen" class="d-flex justify-content-center align-items-center">
-        <div class="blur-rotation-container">
+    <div id="splash-screen" class="w-100 h-100 d-flex justify-content-center align-items-center">
+        <div class="blur-rotation-container w-100 h-100 d-flex justify-content-center align-items-center">
             <img src="./assets/images/splash-logo.png" alt="ETERO INSTANTE AUSTRALI" class="rotating-logo blur-rotation">
             <img src="./assets/images/splash-logo.png" alt="ETERO INSTANTE AUSTRALI" class="rotating-logo-back">
         </div>
     </div>
 
     <!-- Main Content -->
-    <div class="container-fluid p-0 m-0 d-none" id="main-content">
+    <div class="container-fluid p-0 m-0 d-none h-100 align-items-center pt-md-5 pb-md-5 mt-5" id="main-content">
         <!-- Loading Screen -->
         <div id="loading-screen" class="d-flex flex-column justify-content-center align-items-center">
             <div class="spinner-border text-neon" role="status">
@@ -37,59 +39,61 @@
         </div>
 
         <!-- Instructions -->
-        <div id="instructions" class="d-none text-center p-4">
-            <h2 class="text-neon mb-4">Selecciona un álbum</h2>
-            <p class="text-muted mb-4">Enfoca un marcador para descubrir su sonido</p>
+        <div class="row">
+            <div id="instructions" class="col-md-6 offset-md-3 col-4 offset-4 d-none d-flex flex-column text-center p-4 rounded-4 h-50 justify-content-around">
+                <h2 class="text-neon">Selecciona un álbum</h2>
+                <p class="text-muted">Enfoca un marcador para descubrir su sonido</p>
+        
+                <div class="row row-cols-2 row-cols-md-4">
+                    <div class="album-card">
+                        <div class="glow-border">
+                            <img src="./assets/markers/HIRO.jpg" alt="Álbum1" class="img-fluid marker-preview">
+                        </div>
+                        <p class="album-title mt-2">NOISE01</p>
+                    </div>
+                    <div class="album-card">
+                        <div class="glow-border">
+                            <img src="./assets/markers/Cantante.png" alt="Álbum 2" class="img-fluid marker-preview">
+                        </div>
+                        <p class="album-title mt-2">FUZZ02</p>
+                    </div>
+                    <div class="album-card">
+                        <div class="glow-border">
+                            <img src="./assets/markers/pattern-WhatsApp Image 2025-05-05 at 20.42.09.png" alt="Álbum 3" class="img-fluid marker-preview">
+                        </div>
+                        <p class="album-title mt-2">FEEDBACK03</p>
+                    </div>
+                    <div class="album-card">
+                        <div class="glow-border">
+                            <img src="./assets/markers/HIRO.jpg" alt="Álbum 4" class="img-fluid marker-preview">
+                        </div>
+                        <p class="album-title mt-2">STATIC04</p>
+                    </div>
+                </div>
             
-            <div class="album-container d-flex justify-content-center flex-wrap gap-4">
-                <div class="album-card">
-                    <div class="glow-border">
-                        <img src="./assets/markers/HIRO.jpg" alt="Álbum 1" class="img-fluid marker-preview">
-                    </div>
-                    <p class="album-title mt-2">NOISE01</p>
-                </div>
-                <div class="album-card">
-                    <div class="glow-border">
-                        <img src="./assets/markers/Prueba.jpeg" alt="Álbum 2" class="img-fluid marker-preview">
-                    </div>
-                    <p class="album-title mt-2">FUZZ02</p>
-                </div>
-                <div class="album-card">
-                    <div class="glow-border">
-                        <img src="./assets/markers/Prueba2.png" alt="Álbum 3" class="img-fluid marker-preview">
-                    </div>
-                    <p class="album-title mt-2">FEEDBACK03</p>
-                </div>
-                <div class="album-card">
-                    <div class="glow-border">
-                        <img src="./assets/markers/album4.jpg" alt="Álbum 4" class="img-fluid marker-preview">
-                    </div>
-                    <p class="album-title mt-2">STATIC04</p>
-                </div>
-            </div>
-            
-            <button id="start-button" class="btn btn-neon mt-4">Comenzar Experiencia</button>
+                <button id="start-button" class="btn btn-neon mt-4 col-8 offset-2">Comenzar Experiencia</button>
+            </div>        
         </div>
-
+        
         <!-- AR Scene -->
-        <div id="ar-container" class="d-none">
+        <div id="ar-container">
             <a-scene 
-                embedded 
-                arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix;"
+                embedded playsinline
+                arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; sourceWidth: 1280; sourceHeight: 960; displayWidth: 1280; displayHeight: 960;"
                 renderer="logarithmicDepthBuffer: true; precision: medium;"
                 vr-mode-ui="enabled: false">
                 
                 <a-entity light="type: ambient; color: #FFF; intensity: 1"></a-entity>
                 
                 <a-marker preset="custom" id="hiro-marker" url="assets/markers/microfono.patt" type="pattern" emitevents="true">
-                    <a-image src="./assets/images/Prueba.jpeg" position="0 0.1 0" rotation="-90 0 0" width="0.8" height="0.8" id="marker-image"></a-image>
+                    <a-image src="./assets/images/Prueba.jpeg" position="0 0.1 0" rotation="-90 0 0" width="1" height="1" id="marker-image" visible="false"></a-image>
                 </a-marker>
 
                 <a-marker preset="hiro" id="hiro-marker2" emitevents="true">
-                    <a-image src="./assets/images/Prueba2.png" position="0 0.1 0" rotation="-90 0 0" width="0.8" height="0.8" id="marker-image2"></a-image>
+                    <a-image src="./assets/images/Prueba2.png" position="0 0.1 0" rotation="-90 0 0" width="1" height="1" id="marker-image2" visible="false"></a-image>
                 </a-marker>
                 
-                <a-entity camera></a-entity>
+                <a-entity camera look-controls="enabled: false" position="0 0 0"></a-entity>
             </a-scene>
         </div>
 
@@ -104,7 +108,7 @@
         <!-- Status Indicator -->
         <div id="status-indicator" class="d-none">
             <div class="status-pulse"></div>
-            <p id="status-text">Buscando señal...</p>
+            <p id="status-text" class="m-0">Buscando señal...</p>
         </div>
     </div>
 

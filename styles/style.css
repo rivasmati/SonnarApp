@@ -18,8 +18,6 @@ body.new-theme {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
     background: var(--primary-bg) !important;
     z-index: 2000;
     display: flex !important;
@@ -28,24 +26,18 @@ body.new-theme {
 }
 
 .blur-rotation-container {
-    position: relative;
-    width: 300px;
-    height: 300px;
     filter: drop-shadow(0 0 15px rgba(64, 224, 208, 0.4));
 }
 
 .rotating-logo {
-    position: absolute;
-    width: 100%;
-    height: 100%;
     object-fit: contain;
     animation: rotateWithBlur 2s linear infinite !important;
 }
 
 .rotating-logo-back {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     object-fit: contain;
     animation: rotate 3s linear infinite !important;
     opacity: 0.7;
@@ -86,8 +78,8 @@ body.new-theme {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background: rgba(10, 10, 10, 0.95);
     z-index: 1000;
     text-align: center;
@@ -100,30 +92,20 @@ body.new-theme {
 
 /* Instructions */
 #instructions {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background: var(--primary-bg);
-    z-index: 900;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
-/* Album Grid */
-.album-container {
-    max-width: 1200px;
-    padding: 2rem;
-    gap: 2rem;
-}
+@media (max-width: 992px) { 
+    #instructions{
+        margin-top: 7%;
+    }
+ }
 
-.album-card {
-    width: 200px;
-    cursor: pointer;
-}
+@media (min-width: 992px) { 
+    #instructions{
+        margin-top: 15%;
+    }
+ }
 
 .glow-border {
     border: 2px solid rgba(64, 224, 208, 0.3);
@@ -133,9 +115,6 @@ body.new-theme {
 }
 
 .marker-preview {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
     border-radius: 8px;
 }
 
@@ -152,10 +131,23 @@ body.new-theme {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     z-index: 10;
-    display: none !important;
+}
+
+/* Add these styles to handle the A-Frame canvas */
+#ar-container a-scene,
+#ar-container canvas {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover !important;
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    margin: 0 !important;
 }
 
 /* Status Indicator */
@@ -166,7 +158,7 @@ body.new-theme {
     transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.8);
     color: var(--neon-accent);
-    padding: 12px 24px;
+    padding: 12px 20px;
     border-radius: 30px;
     border: 1px solid var(--neon-accent);
     box-shadow: 0 0 15px rgba(64, 224, 208, 0.3);
@@ -202,17 +194,6 @@ body.new-theme {
 .btn-neon:hover {
     background: rgba(64, 224, 208, 0.1);
     box-shadow: 0 0 15px var(--neon-accent);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .album-card {
-        width: 45%;
-    }
-    
-    .marker-preview {
-        height: 140px;
-    }
 }
 
 .blink {
