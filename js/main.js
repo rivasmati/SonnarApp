@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             splashScreen.style.display = 'none';
             mainContent.classList.remove('d-none');
             initializeApp();
-        }, 1000);
+        }, 250);
     }, 3000);
 });
 
@@ -145,78 +145,90 @@ function setupAR() {
     // Configurar eventos para el primer marcador
     if (hiroMarker1) {
         hiroMarker1.addEventListener("markerFound", () => {
-            console.log("Marcador 1 encontrado");
+            console.log("Marcador 1 encontrado - Microfono");
             handleMarkerFound(markerImage1, audioPlayer1);
+            imageElement.emit('resumeRotation'); // Inicia/reanuda la rotación
         });
         
         hiroMarker1.addEventListener("markerLost", () => {
             console.log("Marcador 1 perdido");
             handleMarkerLost(markerImage1, audioPlayer1);
+            imageElement.emit('pauseRotation'); // Pausa la rotación
         });
     }
     
     // Configurar eventos para el segundo marcador
     if (hiroMarker2) {
         hiroMarker2.addEventListener("markerFound", () => {
-            console.log("Marcador 2 encontrado");
+            console.log("Marcador 2 encontrado - Logo Austral");
             handleMarkerFound(markerImage2, audioPlayer2);
+            imageElement.emit('resumeRotation'); // Inicia/reanuda la rotación
         });
         
         hiroMarker2.addEventListener("markerLost", () => {
             console.log("Marcador 2 perdido");
             handleMarkerLost(markerImage2, audioPlayer2);
+            imageElement.emit('pauseRotation'); // Pausa la rotación
         });
     }
     
     // Configurar eventos para el tercer marcador
     if (hiroMarker3) {
         hiroMarker3.addEventListener("markerFound", () => {
-            console.log("Marcador 3 encontrado");
+            console.log("Marcador 3 encontrado - Baquetas");
             handleMarkerFound(markerImage3, audioPlayer3);
+            imageElement.emit('resumeRotation'); // Inicia/reanuda la rotación
         });
         
         hiroMarker3.addEventListener("markerLost", () => {
             console.log("Marcador 3 perdido");
             handleMarkerLost(markerImage3, audioPlayer3);
+            imageElement.emit('pauseRotation'); // Pausa la rotación
         });
     }
     
     // Configurar eventos para el cuarto marcador
     if (hiroMarker4) {
         hiroMarker4.addEventListener("markerFound", () => {
-            console.log("Marcador 4 encontrado");
+            console.log("Marcador 4 encontrado - Huella");
             handleMarkerFound(markerImage4, audioPlayer4);
+            imageElement.emit('resumeRotation'); // Inicia/reanuda la rotación
         });
         
         hiroMarker4.addEventListener("markerLost", () => {
             console.log("Marcador 4 perdido");
             handleMarkerLost(markerImage4, audioPlayer4);
+            imageElement.emit('pauseRotation'); // Pausa la rotación
         });
     }
     
     // Configurar eventos para el quinto marcador
     if (hiroMarker5) {
         hiroMarker5.addEventListener("markerFound", () => {
-            console.log("Marcador 5 encontrado");
+            console.log("Marcador 5 encontrado - Silueta banda");
             handleMarkerFound(markerImage5, audioPlayer5);
+            imageElement.emit('resumeRotation'); // Inicia/reanuda la rotación
         });
         
         hiroMarker5.addEventListener("markerLost", () => {
             console.log("Marcador 5 perdido");
             handleMarkerLost(markerImage5, audioPlayer5);
+            imageElement.emit('pauseRotation'); // Pausa la rotación
         });
     }
     
     // Configurar eventos para el sexto marcador
     if (hiroMarker6) {
         hiroMarker6.addEventListener("markerFound", () => {
-            console.log("Marcador 6 encontrado");
+            console.log("Marcador 6 encontrado - Guitarra");
             handleMarkerFound(markerImage6, audioPlayer6);
+            imageElement.emit('resumeRotation'); // Inicia/reanuda la rotación
         });
         
         hiroMarker6.addEventListener("markerLost", () => {
             console.log("Marcador 6 perdido");
             handleMarkerLost(markerImage6, audioPlayer6);
+            imageElement.emit('pauseRotation'); // Pausa la rotación
         });
     }
 }
